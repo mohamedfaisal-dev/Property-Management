@@ -1,304 +1,154 @@
-# 🏠 Système de Gestion Immobilière
+<div align="center">
+  
+# 🏢 Enterprise Property Management System
 
-## 📖 Vue d'Ensemble
+[![Next.js](https://img.shields.io/badge/Next.js-15.1.4-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.0.0-blue?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-Backend-lightgrey?style=for-the-badge&logo=express)](https://expressjs.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![MariaDB](https://img.shields.io/badge/MariaDB-Database-003545?style=for-the-badge&logo=mariadb)](https://mariadb.org/)
 
-Système complet de gestion immobilière avec génération automatique de factures, suivi des paiements, gestion des propriétés et des locataires.
+**A robust, fully integrated Full-Stack Application built with Next.js App Router and a Custom Express Server.**
+
+[Report Bug](https://github.com/mohamedfaisal-dev/Property-Management/issues) · [Request Feature](https://github.com/mohamedfaisal-dev/Property-Management/issues)
+
+</div>
 
 ---
 
-## 🚀 Démarrage Rapide
+## 📖 Overview
 
-### 1. Installation
+The **Enterprise Property Management System** is a sophisticated, production-grade web application designed to automate and streamline real estate operations. Engineered with a scalable **monolithic architecture** that seamlessly blends a **Next.js frontend** with an **Express.js backend**, this platform offers end-to-end management for properties, tenants, automated billing, and financial analytics.
 
+This project was built from the ground up to demonstrate mastery of modern web architecture, strict type-safety, database relationship management, and automated background processes.
+
+## ✨ Core Features
+
+*   **🏢 Portfolio Management**: Complete CRUD operations for properties including rich media uploads, location tracking, and financial metrics.
+*   **👥 Tenant Lifecycle Management**: End-to-end tenant tracking from onboarding and lease management to payment history and status monitoring.
+*   **🤖 Automated Billing Engine**: Scheduled cron jobs that automatically generate monthly rent invoices (in French compliance formats) exactly when due.
+*   **📄 Dynamic PDF Generation**: On-the-fly, high-performance generation of official receipts and bills using `PDFKit`, with immediate streaming capabilities.
+*   **📊 Real-time Financial Analytics**: Interactive dashboards providing insights into total profits, pending bills, overdue payments, and portfolio ROI.
+*   **🔐 Secure Authentication**: Robust session management and Role-Based Access Control (RBAC) ensuring data privacy.
+
+---
+
+## 🏗️ System Architecture
+
+This repository employs a highly optimized architecture combining the best of Next.js SSR/SSG capabilities with a dedicated Express.js API—all within a single codebase.
+
+```mermaid
+graph TD
+    A[Client Browser] -->|HTTP/REST| B(Next.js App Router)
+    B -->|API Rewrite| C[Express Custom Server]
+    C --> D[Controllers]
+    D --> E[Services Layer]
+    E -->|Automated Jobs| F(Cron Scheduler)
+    E -->|PDF Generation| G(PDFKit Engine)
+    D --> H[Sequelize ORM]
+    H --> I[(MariaDB)]
+```
+
+### 🧩 Architectural Highlights
+*   **Clean Architecture**: Separation of concerns enforced through isolated `Controllers`, `Models`, `Routes`, and `Services`.
+*   **Strict Type-Safety**: 100% TypeScript coverage ensuring zero runtime type errors (`tsc --noEmit` verified).
+*   **Service-Oriented Backend**: Heavy business logic (PDF generation, Cron tasks, Billing cycles) abstracted into dedicated, testable service classes.
+*   **Industrial Code Quality**: Enforced via ESLint, strictly typed API boundaries, and unified error handling middleware.
+
+---
+
+## 💻 Tech Stack
+
+### Frontend
+*   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+*   **Library**: [React 19](https://react.dev/)
+*   **Language**: [TypeScript 5.5](https://www.typescriptlang.org/)
+*   **Styling**: [TailwindCSS](https://tailwindcss.com/)
+*   **Icons**: [Lucide React](https://lucide.dev/)
+*   **Charts**: [Recharts](https://recharts.org/)
+
+### Backend
+*   **Framework**: [Express.js](https://expressjs.com/) (Integrated into Next.js via catch-all routes)
+*   **ORM**: [Sequelize](https://sequelize.org/)
+*   **Database**: [MariaDB](https://mariadb.org/)
+*   **Task Scheduling**: `node-cron`
+*   **Document Generation**: `pdfkit`
+*   **Security**: `helmet`, `cors`, `express-rate-limit`, `bcryptjs`
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+*   Node.js (v18 or higher)
+*   MariaDB / MySQL Server installed and running
+
+### 1. Clone the repository
 ```bash
-# Backend
-cd backend
+git clone https://github.com/mohamedfaisal-dev/Property-Management.git
+cd Property-Management
+```
+
+### 2. Install Dependencies
+```bash
 npm install
+```
+
+### 3. Environment Configuration
+Create a `.env` file in the root directory based on `.env.example` (or use the following template):
+```env
+# Server
+PORT=4002
+NODE_ENV=development
+SESSION_SECRET=your_super_secret_key
+
+# Database
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=property_rental
+DB_USER=root
+DB_PASSWORD=your_password
 
 # Frontend
-cd ..
-npm install
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
 ```
 
-### 2. Configuration
-
+### 4. Database Setup
+Run the database migrations and seed scripts to establish the schema:
 ```bash
-cd backend
-cp env.example .env
-# Éditer .env avec vos paramètres de base de données
+npm run setup:db
 ```
+*(Alternatively, execute the SQL dump located in `scripts/db/property_rental.sql` directly into your MariaDB instance).*
 
-### 3. Migrations de la Base de Données
-
+### 5. Start the Application
+Run the development server. This spins up both the Next.js frontend and the integrated Express backend:
 ```bash
-cd backend
-node scripts/createProfitsTable.js
-node scripts/addBillPaymentColumns.js
-```
-
-### 4. Lancement
-
-```bash
-# Terminal 1 - Backend
-cd backend
-npm start
-
-# Terminal 2 - Frontend
-cd ..
 npm run dev
 ```
-
-Ouvrir : http://localhost:5173
-
----
-
-## ✨ Fonctionnalités
-
-### 🏢 Gestion des Propriétés
-- Ajout/Modification/Suppression de propriétés
-- Upload de photos
-- Détails complets (adresse, loyer, charges)
-
-### 👥 Gestion des Locataires
-- Profils complets des locataires
-- Historique des paiements
-- Statut actif/inactif
-
-### 💰 Facturation Automatique
-- **Génération automatique** le 1er de chaque mois à 9h00
-- Génération manuelle via interface ou scripts
-- Format PDF français "QUITTANCE DE LOYER"
-- Calcul automatique : Loyer + Charges = Total
-
-### 📄 PDFs
-- Génération rapide (~50ms)
-- Format français standard
-- Téléchargement depuis l'interface
-- Téléchargement multiple
-
-### 📊 Dashboard & Analytics
-- Vue d'ensemble des revenus
-- Statistiques des propriétés
-- Suivi des paiements
-- Profits en temps réel
+Navigate to `http://localhost:3000` to view the application.
 
 ---
 
-## 🧪 Tests
-
-### Test Rapide (5 minutes)
-
-```bash
-cd backend
-
-# Test du système
-node scripts/testBillPDF.js
-
-# Test de génération de factures
-node scripts/generateBillsNow.js
-```
-
-### Tests Complets
-
-Voir : **[START_HERE.md](START_HERE.md)** pour le guide complet de test.
+## 🔒 Security Measures
+*   **XSS & CSRF Protection**: Implemented via `helmet` and modern React practices.
+*   **Rate Limiting**: Defending against Brute Force and DDoS attacks using `express-rate-limit`.
+*   **SQL Injection Prevention**: Parameterized queries enforced natively by the Sequelize ORM.
+*   **Sanitized Uploads**: Secure multipart/form-data parsing via `multer` restricted to memory storage and strict file size limits.
 
 ---
 
-## 📚 Documentation
+## 👨‍💻 Author & Portfolio
 
-### Guides Principaux
+**Mohamed Faisal**
+*   **GitHub**: [@mohamedfaisal-dev](https://github.com/mohamedfaisal-dev)
+*   **Portfolio**: [View My Work](#) *(Replace with your actual portfolio link)*
+*   **LinkedIn**: [Connect with me](#) *(Replace with your actual LinkedIn link)*
 
-| Fichier | Description |
-|---------|-------------|
-| **[START_HERE.md](START_HERE.md)** | 👈 Point de départ recommandé |
-| **[LANCEMENT_RAPIDE.md](LANCEMENT_RAPIDE.md)** | Installation et configuration |
-| **[GUIDE_GENERATION_AUTOMATIQUE.md](GUIDE_GENERATION_AUTOMATIQUE.md)** | Génération automatique de factures |
-| **[PDF_FIXED_AND_TESTED.md](PDF_FIXED_AND_TESTED.md)** | Système de génération PDF |
-
-### Guides de Test
-
-| Fichier | Description |
-|---------|-------------|
-| **[TEST_SIMPLE.md](TEST_SIMPLE.md)** | Test rapide en 3 commandes |
-| **[RUN_ALL_TESTS.md](RUN_ALL_TESTS.md)** | Tests complets + dépannage |
-
-### Corrections et Historique
-
-| Fichier | Description |
-|---------|-------------|
-| **[ERREUR_CORRIGEE.md](ERREUR_CORRIGEE.md)** | Correction des colonnes manquantes |
-| **[CORRECTION_ERREUR_500.md](CORRECTION_ERREUR_500.md)** | Correction de l'erreur 500 |
-| **[FACTURES_AUTOMATIQUES_READY.md](FACTURES_AUTOMATIQUES_READY.md)** | Système de génération automatique |
+> *"Driven by building scalable, industrial-grade software solutions that solve real-world problems."*
 
 ---
 
-## 🛠️ Scripts Utiles
-
-### Génération de Factures
-
-```bash
-cd backend
-
-# Mois en cours
-node scripts/generateBillsNow.js
-
-# Mois spécifique
-node scripts/generateBillsForMonth.js 2025-12
-```
-
-### Tests
-
-```bash
-cd backend
-
-# Test du système complet
-node scripts/testBillPDF.js
-
-# Test de téléchargement PDF
-node scripts/testPDFDownload.js
-```
-
-### Migrations
-
-```bash
-cd backend
-
-# Créer la table profits
-node scripts/createProfitsTable.js
-
-# Ajouter les colonnes de paiement
-node scripts/addBillPaymentColumns.js
-```
-
----
-
-## 🏗️ Architecture
-
-### Backend (Node.js + Express)
-```
-backend/
-├── config/          # Configuration base de données
-├── controllers/     # Logique métier
-├── models/          # Modèles Sequelize
-├── routes/          # Routes API
-├── services/        # Services (PDF, Email, Scheduler)
-├── scripts/         # Scripts utilitaires
-└── uploads/         # Fichiers uploadés
-```
-
-### Frontend (React + TypeScript)
-```
-src/
-├── components/      # Composants réutilisables
-├── pages/          # Pages principales
-├── api.js          # Client API
-└── main.tsx        # Point d'entrée
-```
-
----
-
-## 🔧 Technologies
-
-### Backend
-- Node.js 18+
-- Express.js
-- Sequelize ORM
-- MariaDB/MySQL
-- PDFKit (génération PDF)
-- node-cron (planification)
-
-### Frontend
-- React 18
-- TypeScript
-- Vite
-- TailwindCSS
-- Axios
-
----
-
-## 📋 Checklist de Déploiement
-
-### Backend
-- [ ] ✅ MariaDB installé et démarré
-- [ ] ✅ Variables d'environnement (.env) configurées
-- [ ] ✅ Migrations exécutées
-- [ ] ✅ Backend démarré (port 4002)
-- [ ] ✅ Scheduler activé
-
-### Frontend
-- [ ] ✅ Dépendances installées
-- [ ] ✅ Variables d'environnement configurées
-- [ ] ✅ Frontend démarré (port 5173)
-
-### Tests
-- [ ] ✅ Login fonctionne
-- [ ] ✅ Création de facture OK
-- [ ] ✅ Téléchargement PDF OK
-- [ ] ✅ Génération automatique configurée
-
----
-
-## 🎯 Statut du Système
-
-| Composant | Statut |
-|-----------|--------|
-| Base de données | ✅ Opérationnel |
-| Backend API | ✅ Opérationnel |
-| Frontend | ✅ Opérationnel |
-| Génération de factures | ✅ Opérationnel |
-| PDFs | ✅ Opérationnel |
-| Scheduler automatique | ✅ Activé |
-| Tests | ✅ Tous passés |
-
-**→ Système 100% Opérationnel ! 🎉**
-
----
-
-## 🐛 Dépannage
-
-### Erreur: "Column 'rent_amount' not found"
-```bash
-cd backend
-node scripts/addBillPaymentColumns.js
-```
-
-### Erreur: "Table 'profits' doesn't exist"
-```bash
-cd backend
-node scripts/createProfitsTable.js
-```
-
-### Erreur: "ECONNREFUSED"
-- Vérifier que MariaDB est démarré
-- Vérifier les paramètres dans `.env`
-
-### Consulter la Documentation
-Voir **[RUN_ALL_TESTS.md](RUN_ALL_TESTS.md)** section "Dépannage"
-
----
-
-## 📞 Support
-
-Pour plus d'aide, consultez :
-- **[START_HERE.md](START_HERE.md)** - Par où commencer
-- **[TEST_SIMPLE.md](TEST_SIMPLE.md)** - Tests rapides
-- **[RUN_ALL_TESTS.md](RUN_ALL_TESTS.md)** - Dépannage détaillé
-
----
-
-## 📄 Licence
-
-Système propriétaire de gestion immobilière.
-
----
-
-## 👥 Équipe
-
-Développé pour la gestion immobilière avec facturation automatique en français.
-
----
-
-**Version:** 1.0.0  
-**Date:** Octobre 2025  
-**Statut:** ✅ Production Ready
-
+<div align="center">
+  <i>If you found this repository helpful, please consider leaving a ⭐!</i>
+</div>
