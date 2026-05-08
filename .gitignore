@@ -1,0 +1,121 @@
+# ====================================================================
+# Industrial Level .gitignore for Node.js / Next.js / Express Project
+# ====================================================================
+
+# --------------------------------------------------------------------
+# Dependencies
+# --------------------------------------------------------------------
+node_modules/
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# --------------------------------------------------------------------
+# Next.js & Build Outputs
+# --------------------------------------------------------------------
+/.next/
+/out/
+/dist/
+/build/
+.swc/
+dist-ssr/
+
+# --------------------------------------------------------------------
+# Testing & Coverage
+# --------------------------------------------------------------------
+coverage/
+.nyc_output/
+*.lcov
+/.jest/
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+
+# --------------------------------------------------------------------
+# Logs & Databases
+# --------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.sqlite
+*.sqlite3
+
+# --------------------------------------------------------------------
+# Environments & Secrets
+# --------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+*.cert
+*.cert.pem
+*.key.pem
+
+# --------------------------------------------------------------------
+# Caches & Runtime Artifacts
+# --------------------------------------------------------------------
+.eslintcache
+.stylelintcache
+.tsbuildinfo
+*.tsbuildinfo
+.npm
+.yarn
+.parcel-cache/
+.turbo/
+.cache/
+
+# --------------------------------------------------------------------
+# Uploads / Dynamic Content
+# --------------------------------------------------------------------
+# Ignore everything in the uploads directory...
+/uploads/*
+# ...except for the .gitkeep file so the folder is tracked
+!/uploads/.gitkeep
+
+# --------------------------------------------------------------------
+# OS Generated Files
+# --------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --------------------------------------------------------------------
+# IDEs, Editors & AI Assistants
+# --------------------------------------------------------------------
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.bolt/
+.cursor/
+.cursorrules
+
+# --------------------------------------------------------------------
+# Project specific files & local sandbox
+# --------------------------------------------------------------------
+sandbox/
+tools/
+build.log
+knip-report.json
