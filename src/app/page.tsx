@@ -66,16 +66,9 @@ const Login: React.FC = () => {
       if (response.data?.success && response.data?.data) {
         const { token, admin } = response.data.data;
         
-        console.log('Login successful - Token:', token ? 'exists' : 'missing');
-        console.log('Login successful - Admin:', admin);
-        
         // Store auth data
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(admin));
-        
-        // Verify storage
-        console.log('Stored token:', localStorage.getItem('token') ? 'exists' : 'missing');
-        console.log('Stored user:', localStorage.getItem('user'));
         
         // Reset retry count on successful login
         setRetryCount(0);
@@ -85,12 +78,34 @@ const Login: React.FC = () => {
         
         // Redirect to dashboard using React Router
         setTimeout(() => {
-          console.log('Redirecting to dashboard...');
           // Use window.location for a full page reload to ensure clean state
           window.location.href = '/dashboard';
         }, 1000);
       } else {
-        throw new Error('Invalid response format');
+        // Handle rate limiting for non-throwing responses (status < 500)
+        if (response.status === 429) {
+          const retryAfter = parseInt(response.headers?.['retry-after'] || '900');
+          setRetryTimeout(Date.now() + (retryAfter * 1000));
+          setError(`Too many login attempts. Please try again in ${Math.ceil(retryAfter / 60)} minutes.`);
+          return;
+        }
+
+        // Handle validation errors for non-throwing responses (status < 500)
+        if (response.data?.code === 'VALIDATION_ERROR') {
+          setErrorField(response.data.field || null);
+        }
+
+        // Increment retry count
+        const newRetryCount = retryCount + 1;
+        setRetryCount(newRetryCount);
+
+        // After 3 failed attempts, add increasing delays
+        if (newRetryCount >= 3) {
+          const delay = Math.min(Math.pow(2, newRetryCount - 3) * 1000, 30000);
+          setRetryTimeout(Date.now() + delay);
+        }
+
+        setError(response.data?.error || 'Login failed. Please try again.');
       }
     } catch (err: any) {
       console.error('Login error:', err);
@@ -235,6 +250,43 @@ const Login: React.FC = () => {
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
             </form>
+
+            {/* Dev Autofill Box */}
+            <div className="pt-6 border-t border-gray-100">
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('faisal@property.com');
+                  setPassword('faisal123');
+                  setErrorField(null);
+                  setError('');
+                }}
+                className="w-full group flex flex-col items-start p-4 bg-blue-50/40 hover:bg-blue-50/80 border border-blue-100 hover:border-blue-200 rounded-xl transition-all duration-200 text-left"
+              >
+                <div className="flex items-center justify-between w-full mb-2">
+                  <span className="text-xs font-semibold text-blue-800 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    Development Account
+                  </span>
+                  <span className="text-xs text-blue-600 font-medium group-hover:underline flex items-center gap-1">
+                    Auto-fill
+                    <svg className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </div>
+                <div className="space-y-1 text-xs text-gray-600 w-full">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Email:</span>
+                    <span className="font-mono font-medium text-gray-800">faisal@property.com</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Password:</span>
+                    <span className="font-mono font-medium text-gray-800">faisal123</span>
+                  </div>
+                </div>
+              </button>
+            </div>
           </div>
 
           {/* Footer */}

@@ -375,18 +375,6 @@ const TunnetSectionFixed: React.FC = () => {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Tenant Management</h1>
 
-      {/* Debug Panel */}
-      <div className="mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-        <h3 className="font-bold text-yellow-800 mb-2">🐛 Debug Information:</h3>
-        <div className="text-sm text-yellow-700 space-y-1">
-          <p><strong>Tenants State:</strong> {tenants.length} tenants</p>
-          <p><strong>Filtered Tenants:</strong> {filteredTenants.length} tenants</p>
-          <p><strong>Search Term:</strong> "{searchTerm}"</p>
-          <p><strong>Properties:</strong> {properties.length} properties</p>
-          <p><strong>Loading Tenants:</strong> {isLoadingTenants ? 'Yes' : 'No'}</p>
-          <p><strong>Loading Properties:</strong> {isLoadingProperties ? 'Yes' : 'No'}</p>
-        </div>
-      </div>
 
       {/* Status Panels */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

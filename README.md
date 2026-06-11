@@ -1,15 +1,14 @@
 <div align="center">
   
-# 🏢 Enterprise Property Management System
+# 🏢 Enterprise Property Management System (SaaS)
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.1.4-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.0.0-blue?style=for-the-badge&logo=react)](https://react.dev/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.9-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2.7-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-Backend-lightgrey?style=for-the-badge&logo=express)](https://expressjs.com/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![MariaDB](https://img.shields.io/badge/MariaDB-Database-003545?style=for-the-badge&logo=mariadb)](https://mariadb.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS%20v4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 
-**A robust, fully integrated Full-Stack Application built with Next.js App Router and a Custom Express Server.**
+**A premium, high-performance Property Management SaaS built with Next.js App Router API Handlers and Supabase (PostgreSQL). Optimized for cost, efficiency, and real-time operations.**
 
 [Report Bug](https://github.com/mohamedfaisal-dev/Property-Management/issues) · [Request Feature](https://github.com/mohamedfaisal-dev/Property-Management/issues)
 
@@ -19,72 +18,74 @@
 
 ## 📖 Overview
 
-The **Enterprise Property Management System** is a sophisticated, production-grade web application designed to automate and streamline real estate operations. Engineered with a scalable **monolithic architecture** that seamlessly blends a **Next.js frontend** with an **Express.js backend**, this platform offers end-to-end management for properties, tenants, automated billing, and financial analytics.
+The **Enterprise Property Management System** is a production-grade, highly-responsive SaaS application designed to streamline real estate operations. Engineered on a modern **Next.js serverless architecture** backed by **Supabase (PostgreSQL)**, this platform manages properties, tracks tenants, automates billing workflows, and displays real-time cashflow analytics with state-of-the-art client-side and database-level optimizations.
 
-This project was built from the ground up to demonstrate mastery of modern web architecture, strict type-safety, database relationship management, and automated background processes.
+### ⚡ Performance & Caching Engine
+To ensure high speed and cost efficiency (minimizing Supabase API call volume and serverless execution times), the system implements:
+*   **Browser-Side Request Caching**: An advanced caching layer built on Axios in `src/api.ts` with a **30-second TTL** for read-heavy operations (`getDashboardSummary`, `getAnalyticsOverview`, property/tenant/bill/expense lists).
+*   **Intelligent Cache Eviction**: Auto-evicts corresponding lists and active dashboard/analytics keys whenever data mutations (creation, updates, deletions, payments) are executed.
+*   **Postgres-Level Query Indexes**: Optimizations applied to foreign keys and filtered columns (`admin_id`, `property_id`, `tenant_id`, `month`, `status`) to avoid full-table scans.
+
+---
 
 ## ✨ Core Features
 
-*   **🏢 Portfolio Management**: Complete CRUD operations for properties including rich media uploads, location tracking, and financial metrics.
-*   **👥 Tenant Lifecycle Management**: End-to-end tenant tracking from onboarding and lease management to payment history and status monitoring.
-*   **🤖 Automated Billing Engine**: Scheduled cron jobs that automatically generate monthly rent invoices (in French compliance formats) exactly when due.
-*   **📄 Dynamic PDF Generation**: On-the-fly, high-performance generation of official receipts and bills using `PDFKit`, with immediate streaming capabilities.
-*   **📊 Real-time Financial Analytics**: Interactive dashboards providing insights into total profits, pending bills, overdue payments, and portfolio ROI.
-*   **🔐 Secure Authentication**: Robust session management and Role-Based Access Control (RBAC) ensuring data privacy.
+*   **🏢 Portfolio Management**: Complete CRUD operations for properties, supporting rich media uploads directly into Supabase Storage, location tracking, and financial overhead metrics.
+*   **👥 Tenant Lifecycle Management**: Onboard and track tenant leases, security deposits, monthly rent, and checkout processes.
+*   **💳 Automated Invoicing & PDF Receipts**: Chronologically scheduled billing engine with dynamic, high-performance PDF receipts generated via `PDFKit` streaming directly to client browsers.
+*   **📊 Real-time Financial Analytics**: Beautiful dashboards utilizing `Recharts` to display income vs expenses, budget variances, payment compliance rates, and expense category breakdowns.
+*   **🔑 Secure RBAC & Local Dev Autocomplete**: Implements JSON Web Tokens (JWT) for secure authentication. For easier local development, a clean **Development Autofill** panel is integrated on the login screen.
 
 ---
 
 ## 🏗️ System Architecture
 
-This repository employs a highly optimized architecture combining the best of Next.js SSR/SSG capabilities with a dedicated Express.js API—all within a single codebase.
+This repository uses a serverless Architecture using Next.js App Router Route Handlers as backend APIs, completely eliminating the need for standalone backend servers.
 
 ```mermaid
 graph TD
-    A[Client Browser] -->|HTTP/REST| B(Next.js App Router)
-    B -->|API Rewrite| C[Express Custom Server]
-    C --> D[Controllers]
-    D --> E[Services Layer]
-    E -->|Automated Jobs| F(Cron Scheduler)
-    E -->|PDF Generation| G(PDFKit Engine)
-    D --> H[Sequelize ORM]
-    H --> I[(MariaDB)]
+    A[Client Browser] -->|Axios Caching Layer| B(Next.js App Router Pages)
+    B -->|API Requests| C[Next.js Serverless Route Handlers]
+    C -->|JWT Auth & Validation| D[lib/auth & lib/crypto]
+    C -->|Admin Client| E[supabaseAdmin Client]
+    E -->|Optimized Query Indexes| F[(Supabase Cloud DB)]
+    C -->|PDF Generation| G(PDFKit Engine)
+    F -->|Media Buckets| H[Supabase Storage]
 ```
 
 ### 🧩 Architectural Highlights
-*   **Clean Architecture**: Separation of concerns enforced through isolated `Controllers`, `Models`, `Routes`, and `Services`.
-*   **Strict Type-Safety**: 100% TypeScript coverage ensuring zero runtime type errors (`tsc --noEmit` verified).
-*   **Service-Oriented Backend**: Heavy business logic (PDF generation, Cron tasks, Billing cycles) abstracted into dedicated, testable service classes.
-*   **Industrial Code Quality**: Enforced via ESLint, strictly typed API boundaries, and unified error handling middleware.
+*   **Serverless APIs**: Custom REST handlers in `src/app/api/*` that load dynamically, keeping hosting resource overhead low.
+*   **Strict Type-Safety**: 100% strict TypeScript mapping across pages, components, and data endpoints.
+*   **Database Scaling**: Designed with indexes that scale queries to $O(\log N)$ rather than $O(N)$ table scans.
 
 ---
 
 ## 💻 Tech Stack
 
-### Frontend
-*   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
-*   **Library**: [React 19](https://react.dev/)
-*   **Language**: [TypeScript 5.5](https://www.typescriptlang.org/)
-*   **Styling**: [TailwindCSS](https://tailwindcss.com/)
-*   **Icons**: [Lucide React](https://lucide.dev/)
-*   **Charts**: [Recharts](https://recharts.org/)
+### Frontend & Styling
+*   **Core Framework**: Next.js 16.2.9 (App Router)
+*   **View Engine**: React 19.2.7
+*   **Language**: TypeScript 6.0.3
+*   **Design System**: Tailwind CSS v4.0 (Utilizing PostCSS architecture)
+*   **Icons**: Lucide React
+*   **Charts**: Recharts
 
-### Backend
-*   **Framework**: [Express.js](https://expressjs.com/) (Integrated into Next.js via catch-all routes)
-*   **ORM**: [Sequelize](https://sequelize.org/)
-*   **Database**: [MariaDB](https://mariadb.org/)
-*   **Task Scheduling**: `node-cron`
-*   **Document Generation**: `pdfkit`
-*   **Security**: `helmet`, `cors`, `express-rate-limit`, `bcryptjs`
+### Serverless Backend & DB
+*   **Client Core**: Axios 1.17.0 (with Custom Caching TTL Middleware)
+*   **Cloud Database**: Supabase (PostgreSQL)
+*   **Authentication**: JSON Web Token (JWT) & BcryptJS
+*   **PDF Compiler**: PDFKit 0.19.1
+*   **Scheduler**: Node-Cron
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-*   Node.js (v18 or higher)
-*   MariaDB / MySQL Server installed and running
+*   Node.js (v20 or higher)
+*   A Supabase project with table schemas created.
 
-### 1. Clone the repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/mohamedfaisal-dev/Property-Management.git
 cd Property-Management
@@ -95,46 +96,43 @@ cd Property-Management
 npm install
 ```
 
-### 3. Environment Configuration
-Create a `.env` file in the root directory based on `.env.example` (or use the following template):
+### 3. Environment Setup
+Create a `.env` file in the root directory:
 ```env
-# Server
-PORT=4002
-NODE_ENV=development
-SESSION_SECRET=your_super_secret_key
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-secret-key
 
-# Database
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=property_rental
-DB_USER=root
-DB_PASSWORD=your_password
-
-# Frontend
-NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
+# JWT Authentication
+JWT_SECRET=your-custom-jwt-secret-key-string
+JWT_EXPIRES_IN=24h
 ```
 
-### 4. Database Setup
-Run the database migrations and seed scripts to establish the schema:
+### 4. Database Schema Setup
+1. Copy the content of [supabase_schema.sql](file:///c:/Users/moham/OneDrive/Desktop/Property-Management/scripts/db/supabase_schema.sql) and execute it in your **Supabase SQL Editor** to create database tables and seed default administrator credentials.
+2. To optimize database queries and cut down Supabase server usage billing, copy the statements from [supabase_indexes.sql](file:///c:/Users/moham/OneDrive/Desktop/Property-Management/scripts/db/supabase_indexes.sql) and execute them in your **Supabase SQL Editor** to construct the indexes.
+
+### 5. (Optional) Create Development Admin
+To create a custom developer admin credentials locally, configure your `.env` variables and run:
 ```bash
-npm run setup:db
+node scripts/db/create_faisal_admin.js
 ```
-*(Alternatively, execute the SQL dump located in `scripts/db/property_rental.sql` directly into your MariaDB instance).*
 
-### 5. Start the Application
-Run the development server. This spins up both the Next.js frontend and the integrated Express backend:
+### 6. Run the Application
+Start the Next.js development server:
 ```bash
 npm run dev
 ```
-Navigate to `http://localhost:3000` to view the application.
+Navigate to `http://localhost:3000` to view the SaaS dashboard.
 
 ---
 
-## 🔒 Security Measures
-*   **XSS & CSRF Protection**: Implemented via `helmet` and modern React practices.
-*   **Rate Limiting**: Defending against Brute Force and DDoS attacks using `express-rate-limit`.
-*   **SQL Injection Prevention**: Parameterized queries enforced natively by the Sequelize ORM.
-*   **Sanitized Uploads**: Secure multipart/form-data parsing via `multer` restricted to memory storage and strict file size limits.
+## 🛡️ Security Implementations
+*   **Query Index Sanity**: Database indexing on Supabase tables prevents timeout vectors and DDoS bottlenecks.
+*   **Input Sanitization**: Client & server-side object validation via Joi schemas.
+*   **State-of-the-Art Cryptography**: Secure passwords generated and compared using `bcryptjs` with salt-rounds factor of 12.
+*   **Access Control (RBAC)**: Route Handlers verified using stateless JWT authentication checks.
 
 ---
 
@@ -142,13 +140,11 @@ Navigate to `http://localhost:3000` to view the application.
 
 **Mohamed Faisal**
 *   **GitHub**: [@mohamedfaisal-dev](https://github.com/mohamedfaisal-dev)
-*   **Portfolio**: [View My Work](#) *(Replace with your actual portfolio link)*
-*   **LinkedIn**: [Connect with me](#) *(Replace with your actual LinkedIn link)*
-
-> *"Driven by building scalable, industrial-grade software solutions that solve real-world problems."*
+*   **Portfolio**: [View My Work](#)
+*   **LinkedIn**: [Connect with me](#)
 
 ---
 
 <div align="center">
-  <i>If you found this repository helpful, please consider leaving a ⭐!</i>
+  <i>If you found this project helpful, please consider leaving a ⭐!</i>
 </div>
