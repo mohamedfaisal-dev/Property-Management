@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Quick Start Script - Property Management System
+# Quick Start Script - RentalHub — Property Rental SaaS
 # This script checks if everything is set up and starts the server
 
-echo "🚀 Property Management System - Quick Start"
+echo "🚀 RentalHub — Property Rental SaaS - Quick Start"
 echo "==========================================="
 echo ""
 

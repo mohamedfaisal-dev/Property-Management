@@ -149,9 +149,9 @@ const Login: React.FC = () => {
           <div className="w-24 h-24 bg-white/10 backdrop-blur-lg rounded-3xl flex items-center justify-center mb-8 animate-float">
             <Home className="w-12 h-12 text-white" />
           </div>
-          <h2 className="text-display-large mb-6 text-center">Property Management<br/>Made Simple</h2>
+          <h2 className="text-display-large mb-6 text-center">RentalHub<br/>Property Rental SaaS</h2>
           <p className="text-body-large text-white/80 text-center max-w-md">
-            Your comprehensive property management platform for home sharing and co-living.
+            Your comprehensive property rental SaaS platform.
           </p>
         </div>
       </div>
@@ -292,7 +292,7 @@ const Login: React.FC = () => {
           {/* Footer */}
           <div className="text-center mt-8">
             <p className="text-body-small text-gray-500">
-              © 2025 HomeShare. All rights reserved.
+              © 2026 RentalHub. All rights reserved.
             </p>
           </div>
         </div>

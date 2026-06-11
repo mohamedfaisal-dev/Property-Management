@@ -1,6 +1,6 @@
 <div align="center">
   
-# 🏢 Enterprise Property Management System (SaaS)
+# 🏢 RentalHub — Property Rental SaaS
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.9-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.2.7-blue?style=for-the-badge&logo=react)](https://react.dev/)
@@ -8,7 +8,7 @@
 [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS%20v4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 
-**A premium, high-performance Property Management SaaS built with Next.js App Router API Handlers and Supabase (PostgreSQL). Optimized for cost, efficiency, and real-time operations.**
+**A premium, high-performance Property Rental SaaS (RentalHub) built with Next.js App Router API Handlers and Supabase (PostgreSQL). Optimized for cost, efficiency, and real-time operations.**
 
 [Report Bug](https://github.com/mohamedfaisal-dev/Property-Management/issues) · [Request Feature](https://github.com/mohamedfaisal-dev/Property-Management/issues)
 
@@ -18,7 +18,7 @@
 
 ## 📖 Overview
 
-The **Enterprise Property Management System** is a production-grade, highly-responsive SaaS application designed to streamline real estate operations. Engineered on a modern **Next.js serverless architecture** backed by **Supabase (PostgreSQL)**, this platform manages properties, tracks tenants, automates billing workflows, and displays real-time cashflow analytics with state-of-the-art client-side and database-level optimizations.
+The **RentalHub Property Rental SaaS** is a production-grade, highly-responsive application designed to streamline real estate operations. Engineered on a modern **Next.js serverless architecture** backed by **Supabase (PostgreSQL)**, this platform manages properties, tracks tenants, automates billing workflows, and displays real-time cashflow analytics with state-of-the-art client-side and database-level optimizations.
 
 ### ⚡ Performance & Caching Engine
 To ensure high speed and cost efficiency (minimizing Supabase API call volume and serverless execution times), the system implements:

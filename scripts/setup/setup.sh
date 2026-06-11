@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Property Management System - Automated Setup Script
+# RentalHub — Property Rental SaaS - Automated Setup Script
 # Run this script in Git Bash or WSL
 
-echo "🏠 Property Management System - Setup Script"
+echo "🏠 RentalHub — Property Rental SaaS - Setup Script"
 echo "============================================="
 echo ""
 

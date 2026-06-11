@@ -621,8 +621,8 @@ const Dashboard = () => {
     <div className="space-y-6">
       {/* Welcome Header */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Welcome to Property Management</h1>
-        <p className="text-blue-100">Manage your properties, tenants, and finances efficiently</p>
+        <h1 className="text-2xl font-bold mb-2">Welcome to RentalHub</h1>
+        <p className="text-blue-100">Manage your property rental SaaS, tenants, and finances efficiently</p>
       </div>
 
       {/* Real Statistics Cards */}

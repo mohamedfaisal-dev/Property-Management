@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import "@/index.css";
 
 export const metadata: Metadata = {
-    title: 'Home Sharing Rental Dashboard',
-    description: 'Home Sharing Rental Dashboard Application',
+    title: 'RentalHub — Property Rental SaaS',
+    description: 'RentalHub — Property Rental SaaS Application',
 };
 
 export default function RootLayout({

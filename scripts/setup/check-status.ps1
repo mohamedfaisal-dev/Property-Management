@@ -1,6 +1,6 @@
-# Property Management System - Status Check Script
+# RentalHub — Property Rental SaaS - Status Check Script
 
-Write-Host "Property Management System - Status Check" -ForegroundColor Cyan
+Write-Host "RentalHub — Property Rental SaaS - Status Check" -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host ""
 

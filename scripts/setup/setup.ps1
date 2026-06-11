@@ -1,7 +1,7 @@
-# Property Management System - Automated Setup Script
+# RentalHub — Property Rental SaaS - Automated Setup Script
 # Run this script as Administrator
 
-Write-Host "🏠 Property Management System - Setup Script" -ForegroundColor Cyan
+Write-Host "🏠 RentalHub — Property Rental SaaS - Setup Script" -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host ""
 
